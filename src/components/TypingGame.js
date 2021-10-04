@@ -132,7 +132,7 @@ const TypingGame = (props) => {
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
                 <TextInput setScore={setScore} score={score} onChange={typingSpeedChange} handleChange={handleWordsChange} words={words} />
             </div>
-            <div id="scoreboard" className="block" style={{ backgroundColor: "rgb(108,95,152,0.5)", height: "100px", padding: "5px", display: "flex" }}>
+            <div id="stats" className="block" style={{ backgroundColor: "rgb(108,95,152,0.5)", height: "100px", padding: "5px", display: "flex" }}>
                 <ScoreDisplay value={60 * typingSpeed} header="real-time wpm"></ScoreDisplay>
                 <ScoreDisplay value={typingSpeedDisplay} header="wpm"></ScoreDisplay>
                 <ScoreDisplay value={score.incorrectWords} header="incorrect words"></ScoreDisplay>

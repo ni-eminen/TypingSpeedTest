@@ -32,3 +32,34 @@
   margin: 3px;
   background-color: rgb(255, 255, 255, 0.5);
 }
+
+.window {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  max-width: 640px;
+  margin: auto;
+  background-color: rgb(108, 95, 152, 0.5);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  border: none;
+}
+
+#scoreboard {
+  font-size: 2em;
+  color: white;
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
