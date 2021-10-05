@@ -1,4 +1,5 @@
-import react from 'react'
+import React from 'react'
+import ScoreDisplay from './ScoreDisplay';
 import { useEffect, useState, useRef } from 'react';
 import correctSound from '../sounds/correct_bloop.mp3'
 import incorrectSound from '../sounds/wrong_bloop.mp3'
@@ -51,27 +52,6 @@ const TextInput = (props) => {
           onChange={onChange}
           autoFocus={true}
         />
-      </div>
-    )
-  }
-  
-  const BackgroundVideo = ({ videoSrc }) => {
-    return (
-      <div id="bgVideoWrap">
-        <video id="backgroundVideo" loop={true} autoPlay={true} muted={true}>
-          <source src={videoSrc} type="video/mp4" />
-        </video>
-      </div>
-    )
-  }
-  
-  const ScoreDisplay = ({ header, value }) => {
-    return (
-      <div id="typingSpeed" style={{ textAlign: "center", height: "100%", backgroundColor: "rgb(108,95,152,0.7)", borderRadius: "5px", display: "inline-block", marginRight: "5px", width: "100%", color: "white" }}>
-        <div className="block" id="header" style={{ height: "30%" }}>{header}</div>
-        <div className="block" id="display" style={{ height: "70%" }}>
-          <p style={{ verticalAlign: "center" }}>{value}</p>
-        </div>
       </div>
     )
   }
@@ -130,7 +110,7 @@ const TypingGame = (props) => {
         <div id="gameWrapper" style={{ maxWidth: "640px", margin: "10px auto" }}>
             <WordDisplay words={words}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
-                <TextInput setScore={setScore} score={score} onChange={typingSpeedChange} handleChange={handleWordsChange} words={words} />
+                <TextInput id="typingInput" setScore={setScore} score={score} onChange={typingSpeedChange} handleChange={handleWordsChange} words={words} />
             </div>
             <div id="stats" className="block" style={{ backgroundColor: "rgb(108,95,152,0.5)", height: "100px", padding: "5px", display: "flex" }}>
                 <ScoreDisplay value={60 * typingSpeed} header="real-time wpm"></ScoreDisplay>
