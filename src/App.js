@@ -1,34 +1,15 @@
 import './App.css';
 import './TextInput.css';
 import TypingGame from './components/TypingGame.js'
+import TextInput from './components/TextInput'
 import { useEffect, useState, useRef } from 'react';
 import sample from './videos/video.mp4'
-import correctSound from './sounds/correct_bloop.mp3'
-import incorrectSound from './sounds/wrong_bloop.mp3'
 
 let wordList = "I saw a tree and thought of you, or rather, thought of the way you see trees. I remembered when we walked through the Ramble in Central Park, a wild place in the center of a place wilder still, resplendent and emerald in the early summer sun. You stopped suddenly when you saw it. I remember how you cocked your head in appreciation, a tendril of hair escaped from behind your ear. You brushed it back with an unconscious hand.".replace(/,|\.|/g, "").toLowerCase()
 wordList = wordList.split(" ")
 
 let scores = [
-  {
-    user: "matias",
-    score: 400
-  },{
-    user: "roni",
-    score: 300
-  },{
-    user: "pekka",
-    score: 200
-  },{
-    user: "weerti",
-    score: 100
-  },{
-    user: "osku",
-    score: 50
-  },{
-    user: "mans",
-    score: 1400
-  }
+
 ]
 
 const submitName = () => {
@@ -72,9 +53,9 @@ const StartMenu = (props) => {
 
   return (
     <div id="startMenuWrapper">
-      <form onSubmit={submitName}>
+      <TextInput>
 
-      </form>
+      </TextInput>
     </div>
   )
 }
@@ -111,11 +92,14 @@ const BackgroundVideo = ({ videoSrc }) => {
 }
 
 const App = (props) => {
-  const [view, setView] = useState("game") 
+  const [view, setView] = useState("start") 
 
   if(view == "start"){
       return (
+        <>
+        <BackgroundVideo videoSrc={sample}></BackgroundVideo>
         <StartMenu></StartMenu>
+        </>
       )
     }else if(view === "game"){
       return (
