@@ -1,15 +1,18 @@
 import React from 'react'
-import { useEffect, useState, useRef } from 'react';
-import correctSound from '../sounds/correct_bloop.mp3'
-import incorrectSound from '../sounds/wrong_bloop.mp3'
+import { useEffect, useState } from 'react';
 
 const TextInput = (props) => {
     const [value, setValue] = useState("")
     const [label, setLabel] = useState("")
+
+    if(props.label) setLabel(props.label)
   
     const onChange = event => {
       let written = event.target.value
-      setValue(written)
+      if(written.length < props.limit){
+        setValue(written)
+        props.set(written)
+      }
     }
   
     useEffect(() => {
@@ -25,6 +28,7 @@ const TextInput = (props) => {
           placeholder={label}
           onChange={onChange}
           autoFocus={true}
+          style={{color:"white"}}
         />
       </div>
     )

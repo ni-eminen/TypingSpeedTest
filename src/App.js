@@ -2,20 +2,10 @@ import './App.css';
 import './TextInput.css';
 import TypingGame from './components/TypingGame.js'
 import TextInput from './components/TextInput'
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import sample from './videos/video.mp4'
-
-let wordList = "I saw a tree and thought of you, or rather, thought of the way you see trees. I remembered when we walked through the Ramble in Central Park, a wild place in the center of a place wilder still, resplendent and emerald in the early summer sun. You stopped suddenly when you saw it. I remember how you cocked your head in appreciation, a tendril of hair escaped from behind your ear. You brushed it back with an unconscious hand.".replace(/,|\.|/g, "").toLowerCase()
-wordList = wordList.split(" ")
-
-let scores = [
-
-]
-
-const submitName = () => {
-  
-}
-
+import service from './services/typingGame'
+import axios from 'axios'
 
 //swap function for quicksort
 const swap = (arr, i, j) => {
@@ -48,34 +38,48 @@ const quicksort = (arr, low, high) => {
   }
 }
 
+const InputField = (props) => {
+
+  if(props.limit == null) props.limit = Number.MAX_SAFE_INTEGER
+  return(
+    <div id="inputField">
+      <h2>{props.title}</h2>
+      <TextInput set={props.set} limit={props.limit}/>
+    </div>
+  )
+
+}
+
 const StartMenu = (props) => {
   const [name, setName] = useState('')
-
   return (
-    <div id="startMenuWrapper">
-      <TextInput>
-
-      </TextInput>
+    <div id="startMenuWrapper"> 
+      <InputField title="Name:" set={setName} limit={16}></InputField>
+      <div className="button" onClick={() => {if(name.length > 0) {props.submit(name); props.continue()}}} tabIndex="0">
+        <p>Start!</p>
+      </div>
     </div>
   )
 }
 
 const ScoreBoard = (props) => {
-  quicksort(scores, 0, scores.length - 1)
-  scores.reverse()
+  quicksort(props.scores, 0, props.scores.length - 1)
+  props.scores.reverse()
   return (
     <div id="scoreBoardWrapper" className="window">
       <table id="scoreboard">
-        <tr>
-          <th>User</th>
-          <th>Score</th>
-        </tr>
-        {scores.map(score => 
-        <tr>
-          <th>{score.user}</th>
-          <th>{score.score}</th>
-        </tr>
-        )}
+        <tbody>
+            <tr>
+              <th>User</th>
+              <th>Score</th>
+            </tr>
+            {props.scores.map(score => 
+            <tr key={Math.random()}>
+              <th>{score.name}</th>
+              <th>{score.score}</th>
+            </tr>
+            )}
+          </tbody>
       </table>
   </div>
   )
@@ -93,22 +97,59 @@ const BackgroundVideo = ({ videoSrc }) => {
 
 const App = (props) => {
   const [view, setView] = useState("start") 
+  const [scores, setScores] = useState()
+  const [user, setUser] = useState("")
+  const [score, setScore] = useState()
 
-  if(view == "start"){
+  useEffect(() => {
+    const req = axios.get("https://typingspeedserver.herokuapp.com/api/scores")
+        req.then(response => {
+          console.log(response.data);
+        setScores(response.data)
+      })
+  }, [])
+
+  const submitName = (name) => {
+    if(name === "") return
+    setUser(name)
+    console.log("playerName: ", name);
+  }
+
+  const saveScore = (score) => {
+    let newScore = {
+      name: user,
+      score: score
+    }
+  
+    console.log("axios.create", newScore);
+    let request = service.create(newScore)
+    request.then(returnedScore => {
+      setScores([...scores, returnedScore])
+    })
+  }
+
+  const endGame = (score) => {
+    console.log("endgame called", score);
+    setScore(score)
+    setView('score')
+    saveScore(score)
+  }
+
+  if(view === "start"){
       return (
         <>
         <BackgroundVideo videoSrc={sample}></BackgroundVideo>
-        <StartMenu></StartMenu>
+        <StartMenu id="startMenu" submit={submitName} continue={() => {setView('game')}}></StartMenu>
         </>
       )
-    }else if(view === "game"){
+    }else if(view === "game" || view === "score"){
       return (
         <>
           <BackgroundVideo videoSrc={sample}></BackgroundVideo>
     
           <div id="wrapper" style={{ padding: "10px" }}>
-            <TypingGame className="typingGame"/>
-            <ScoreBoard></ScoreBoard>
+            <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={3}/>
+            <ScoreBoard scores={scores}></ScoreBoard>
           </div>
         </>
       )

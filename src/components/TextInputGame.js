@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import correctSound from '../sounds/correct_bloop.mp3'
 import incorrectSound from '../sounds/wrong_bloop.mp3'
 
@@ -7,6 +7,9 @@ const TextInputGame = (props) => {
     const [value, setValue] = useState("")
     const [label, setLabel] = useState("")
   
+    if(props.label) setLabel(props.label)
+
+
     const nextWord = () => {
       setValue("");
       props.handleChange()

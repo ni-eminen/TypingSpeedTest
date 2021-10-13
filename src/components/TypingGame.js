@@ -7,53 +7,6 @@ let wordList = "I saw a tree and thought of you, or rather, thought of the way y
 wordList = wordList.split(" ")
 let str = "test , . test"
 console.log(str.replace(/\.|,/g, ""));
-
-// const TextInput = (props) => {
-//     const [value, setValue] = useState("")
-//     const [label, setLabel] = useState("")
-  
-//     const nextWord = () => {
-//       setValue("");
-//       props.handleChange()
-//     }
-  
-//     const onChange = event => {
-//       let written = event.target.value
-//       if(written === " "){
-//         setValue("")
-//         return
-//       }
-//       props.onChange()
-//       let next = event.target.value[event.target.value.length - 1] === " "
-//       setValue(written)
-//       if (written === props.words[0] + " " && next) {
-//         new Audio(correctSound).play()
-//         nextWord()
-//         props.setScore({...props.score, correctWords: ++props.score.correctWords})
-//       } else if (next) {
-//         new Audio(incorrectSound).play()
-//         nextWord()
-//         props.setScore({...props.score, incorrectWords: ++props.score.incorrectWords})
-//       }
-//     }
-  
-//     useEffect(() => {
-  
-//     }, [props.words])
-  
-//     return (
-//       <div className="field" style={{ margin: "10px auto" }}>
-//         <input
-//           id={props.id}
-//           type="text"
-//           value={value}
-//           placeholder={label}
-//           onChange={onChange}
-//           autoFocus={true}
-//         />
-//       </div>
-//     )
-//   }
   
   const WordDisplay = ({ words }) => {
     return (
@@ -64,15 +17,37 @@ console.log(str.replace(/\.|,/g, ""));
     )
   }
 
+const TimerDisplay = (props) => {
+  const [time, setTime] = useState(props.timeLimit)
+
+  useEffect(() => {
+    if(props.started) {
+      if(time <= 0) {
+        props.end()
+        return
+      }
+      const timer = time > 0 && setInterval(() => setTime(time - 1), 1000)
+      return () => clearInterval(timer)
+    }
+  }, [time, props.started])
+
+  return (
+    <div id="timer" className="window">
+      <p>{time}</p>
+    </div>
+  )
+}
+
 const TypingGame = (props) => {
     const [words, setWords] = useState(wordList)
     const [typingSpeed, setTypingSpeed] = useState(0)
-    const [typingSpeedDisplay, setTypingSpeedDisplay] = useState(0)
     const [score, setScore] = useState({
       wpm: 0,
       correctWords: 0,
       incorrectWords: 0
     })
+    const [started, setStarted] = useState(false)
+
     const typingSpeedRef = useRef(typingSpeed)
     typingSpeedRef.current = typingSpeed
   
@@ -109,12 +84,14 @@ const TypingGame = (props) => {
         <div id="gameWrapper" style={{ maxWidth: "640px", margin: "10px auto" }}>
             <WordDisplay words={words}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
-                <TextInputGame id="typingInput" setScore={setScore} score={score} onChange={typingSpeedChange} handleChange={handleWordsChange} words={words} />
+                <TextInputGame id="typingInput" setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
             </div>
+            <TimerDisplay timeLimit={props.timeLimit} started={started} end={() => props.gameEndFunction(score.correctWords)}></TimerDisplay>
             <div id="stats" className="block" style={{ backgroundColor: "rgb(108,95,152,0.5)", height: "100px", padding: "5px", display: "flex" }}>
                 <ScoreDisplay value={60 * typingSpeed} header="real-time cpm"></ScoreDisplay>
                 <ScoreDisplay value={(60 * typingSpeed)/5} header="wpm"></ScoreDisplay>
                 <ScoreDisplay value={score.incorrectWords} header="incorrect words"></ScoreDisplay>
+                <ScoreDisplay value={score.correctWords} header="correct words"></ScoreDisplay>
             </div>
         </div>
     )
