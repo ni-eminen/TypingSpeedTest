@@ -63,8 +63,13 @@ const StartMenu = (props) => {
 }
 
 const ScoreBoard = (props) => {
-  quicksort(props.scores, 0, props.scores.length - 1)
-  props.scores.reverse()
+  //TODO: props.scores is undefined at times
+  if(props.scores) {  
+    quicksort(props.scores, 0, props.scores.length - 1)
+    props.scores.reverse()
+  }
+
+
   return (
     <div id="scoreBoardWrapper" className="window">
       <table id="scoreboard">
@@ -148,7 +153,7 @@ const App = (props) => {
           <BackgroundVideo videoSrc={sample}></BackgroundVideo>
     
           <div id="wrapper" style={{ padding: "10px" }}>
-            <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={3}/>
+            <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={60}/>
             <ScoreBoard scores={scores}></ScoreBoard>
           </div>
         </>
