@@ -67,6 +67,8 @@ const ScoreBoard = (props) => {
   if(props.scores) {  
     quicksort(props.scores, 0, props.scores.length - 1)
     props.scores.reverse()
+  } else {
+    props.scores = []
   }
 
 
