@@ -109,6 +109,7 @@ const App = (props) => {
   const [score, setScore] = useState()
 
   useEffect(() => {
+    document.title = "Typing Speed Test"
     const req = axios.get("https://typingspeedserver.herokuapp.com/api/scores")
         req.then(response => {
           console.log(response.data);
