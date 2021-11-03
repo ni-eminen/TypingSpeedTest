@@ -10,7 +10,7 @@ console.log(str.replace(/\.|,/g, ""));
   
   const WordDisplay = ({ words }) => {
     return (
-      <div className="block" style={{ minHeight: "100px", maxHeight: "100px", backgroundColor: "rgb(108,95,152,0.5)", overflowY: "hidden" }}>
+      <div className="block" style={{ minHeight: "100px", maxHeight: "100px", /*backgroundColor: "rgb(108,95,152,0.5)",*/ overflowY: "hidden" }}>
         <span className="firstWord">{words[0]} </span>
         {words.slice(1).map(word => <span key={Math.random()} className="word">{word} </span>)}
       </div>
@@ -87,7 +87,7 @@ const TypingGame = (props) => {
                 <TextInputGame id="typingInput" setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
             </div>
             <TimerDisplay timeLimit={props.timeLimit} started={started} end={() => props.gameEndFunction(score.correctWords)}></TimerDisplay>
-            <div id="stats" className="block" style={{ backgroundColor: "rgb(108,95,152,0.5)", height: "100px", padding: "5px", display: "flex" }}>
+            <div id="stats" style={{ height: "100px", display: "flex" }}>
                 <ScoreDisplay value={60 * typingSpeed} header="real-time cpm"></ScoreDisplay>
                 <ScoreDisplay value={(60 * typingSpeed)/5} header="wpm"></ScoreDisplay>
                 <ScoreDisplay value={score.incorrectWords} header="incorrect words"></ScoreDisplay>
