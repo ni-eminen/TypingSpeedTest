@@ -1,0 +1,116 @@
+body {
+  background-color: black;
+}
+
+#backgroundVideo {
+  position: fixed;
+  z-index: -10;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  min-width: 100%;
+  height: 150vh;
+  opacity: 0.5;
+}
+
+.block {
+  border-radius: 5px;
+}
+
+.word {
+  display: inline-block;
+  color: white;
+  font-size: 32px;
+  padding: 0px 0px 0px 5px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 3px;
+}
+
+.firstWord {
+  display: inline-block;
+  color: white;
+  font-size: 32px;
+  padding: 0px 3px 3px 3px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 3px;
+  background-color: rgb(255, 255, 255, 0.5);
+}
+
+.window {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  max-width: 640px;
+  margin: 10px auto;
+  background-color: rgb(108, 95, 152, 0.5);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  border: none;
+}
+
+#scoreboard {
+  font-size: 2em;
+  color: white;
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#typingInput {
+  color: white;
+}
+
+#startMenuWrapper {
+  max-width: 640px;
+  margin: auto;
+}
+
+h2 {
+  color: white;
+  font-size: 3em;
+  margin: 0;
+}
+
+.button {
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  border-radius: 4px;
+  transition: 0.3s all;
+  padding: 3px;
+}
+
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.button p {
+  font-size: 2em;
+  color: white;
+}
+
+#timer {
+  padding: 10px;
+  text-align: center;
+}
+
+#timer p {
+  color: white;
+  font-size: 4em;
+  margin: 0;
+}

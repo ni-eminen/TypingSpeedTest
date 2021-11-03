@@ -1,4 +1,4 @@
-import './App.css';
+import './GrayTheme.css';
 import './TextInput.css';
 import TypingGame from './components/TypingGame.js'
 import TextInput from './components/TextInput'
@@ -146,14 +146,14 @@ const App = (props) => {
   if(view === "start"){
       return (
         <>
-        <BackgroundVideo videoSrc={sample}></BackgroundVideo>
+        {/* <BackgroundVideo videoSrc={sample}></BackgroundVideo> */}
         <StartMenu id="startMenu" submit={submitName} continue={() => {setView('game')}}></StartMenu>
         </>
       )
     }else if(view === "game" || view === "score"){
       return (
         <>
-          <BackgroundVideo videoSrc={sample}></BackgroundVideo>
+          {/* <BackgroundVideo videoSrc={sample}></BackgroundVideo> */}
     
           <div id="wrapper" style={{ padding: "10px" }}>
             <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={60}/>
