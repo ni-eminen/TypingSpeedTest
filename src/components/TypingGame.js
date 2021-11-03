@@ -87,7 +87,7 @@ const TypingGame = (props) => {
                 <TextInputGame id="typingInput" setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
             </div>
             <TimerDisplay timeLimit={props.timeLimit} started={started} end={() => props.gameEndFunction(score.correctWords)}></TimerDisplay>
-            <div id="stats" style={{ height: "100px", display: "flex" }}>
+            <div id="stats">
                 <ScoreDisplay value={60 * typingSpeed} header="real-time cpm"></ScoreDisplay>
                 <ScoreDisplay value={(60 * typingSpeed)/5} header="wpm"></ScoreDisplay>
                 <ScoreDisplay value={score.incorrectWords} header="incorrect words"></ScoreDisplay>

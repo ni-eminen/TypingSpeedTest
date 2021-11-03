@@ -1,4 +1,5 @@
 body {
+  font-family: helvetica;
   background-color: black;
   background: linear-gradient(
     90deg,
@@ -67,6 +68,8 @@ table {
   background-color: rgba(59, 39, 124, 0);
   height: 100px;
   display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
 }
 
 .scoreDisplay {
@@ -79,9 +82,9 @@ table {
   text-align: center;
   height: 100%;
   display: inline-block;
-  margin-right: 5px;
   width: 100%;
   color: white;
+  max-width: 24%;
 }
 
 #scoreboard {
