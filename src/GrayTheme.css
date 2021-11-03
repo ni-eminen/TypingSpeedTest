@@ -45,6 +45,14 @@ body {
   background-color: rgb(255, 255, 255, 0.5);
 }
 
+#wordDisplayWrapper {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  height: 5.5em;
+  overflow-y: hidden;
+  outline: 1px orange;
+}
+
 .window {
   background-color: rgba(255, 255, 255, 0.3);
   max-width: 640px;

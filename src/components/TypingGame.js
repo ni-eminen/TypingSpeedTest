@@ -5,12 +5,12 @@ import { useEffect, useState, useRef } from 'react';
 
 let wordList = "I saw a tree and thought of you, or rather, thought of the way you see trees. I remembered when we walked through the Ramble in Central Park, a wild place in the center of a place wilder still, resplendent and emerald in the early summer sun. You stopped suddenly when you saw it. I remember how you cocked your head in appreciation, a tendril of hair escaped from behind your ear. You brushed it back with an unconscious hand.".replace(/,|\.|/g, "").toLowerCase()
 wordList = wordList.split(" ")
-let str = "test , . test"
-console.log(str.replace(/\.|,/g, ""));
+let th = 0
   
   const WordDisplay = ({ words }) => {
+    
     return (
-      <div className="block" style={{ minHeight: "100px", maxHeight: "100px", /*backgroundColor: "rgb(108,95,152,0.5)",*/ overflowY: "hidden" }}>
+      <div id="wordDisplayWrapper">
         <span className="firstWord">{words[0]} </span>
         {words.slice(1).map(word => <span key={Math.random()} className="word">{word} </span>)}
       </div>
