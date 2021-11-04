@@ -6,19 +6,41 @@ import { useEffect, useState, useRef } from 'react';
 let wordList = "I saw a tree and thought of you, or rather, thought of the way you see trees. I remembered when we walked through the Ramble in Central Park, a wild place in the center of a place wilder still, resplendent and emerald in the early summer sun. You stopped suddenly when you saw it. I remember how you cocked your head in appreciation, a tendril of hair escaped from behind your ear. You brushed it back with an unconscious hand.".replace(/,|\.|/g, "").toLowerCase()
 wordList = wordList.split(" ")
   
-  const WordDisplay = ({ words, idx }) => {
+  const WordDisplay = ({ words, idx, classes }) => {
+    const [wordsArr, setWordsArr] = useState([])
+
+    useEffect(() => {
+      let arr = words.map((word, i) => <span className="word" key={i}>{word}</span>)
+      setWordsArr(arr)
+      console.log(wordsArr);
+    }, []);
+
+    
     return (
       <div id="wordDisplayWrapper">
-        { 
-          words.map((word, i) => {
-          if(i == idx) {
-            return <span key={i} className="firstWord">{word} </span>
-          } else {
-            return <span key={i} className="word">{word} </span>
+         {words.map((word, i) => {
+           if(i === idx){
+            return (<span key={i} className={"firstWord"}>{word}</span>)
+           } else {
+             return (<span key={i} className={classes[i] || "word"}>{word}</span>)
+           }
           }
-        })}
+         )}
       </div>
     )
+
+    // return (
+    //   <div id="wordDisplayWrapper">
+    //     { 
+    //       words.map((word, i) => {
+    //       if(i == idx) {
+    //         return <span key={i} className="firstWord">{word} </span>
+    //       } else {
+    //         return <span key={i} className="word">{word} </span>
+    //       }
+    //     })}
+    //   </div>
+    // )
   }
 
 const TimerDisplay = (props) => {
@@ -52,6 +74,8 @@ const TypingGame = (props) => {
     })
     const [started, setStarted] = useState(false)
     const [idx, setIdx] = useState(0)
+    const [classes, setClasses] = useState([])
+
 
     const typingSpeedRef = useRef(typingSpeed)
     typingSpeedRef.current = typingSpeed
@@ -71,7 +95,6 @@ const TypingGame = (props) => {
     const handleWordsChange = () => {
       let i = idx + 1
       let w = [...words]
-      // w.shift()
       setIdx(i)
       setWords(w)
     }
@@ -82,6 +105,12 @@ const TypingGame = (props) => {
         decrTypingSpeed()
       }, 1000);
     }
+
+    const updateClasses = (correct) => {
+      let tempClasses = classes.slice()
+      correct ? tempClasses.push("correctWord") : tempClasses.push("wrongWord")
+      setClasses(tempClasses)
+    }
   
     useEffect(() => {
   
@@ -89,9 +118,9 @@ const TypingGame = (props) => {
 
     return (
         <div id="gameWrapper" style={{ maxWidth: "640px", margin: "10px auto" }}>
-            <WordDisplay words={words} idx={idx}></WordDisplay>
+            <WordDisplay words={words} idx={idx} classes={classes}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
-                <TextInputGame id="typingInput" idx={idx} setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
+                <TextInputGame id="typingInput" idx={idx} setScore={setScore} updateClasses={updateClasses} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
             </div>
             <TimerDisplay timeLimit={props.timeLimit} started={started} end={() => props.gameEndFunction(score.correctWords)}></TimerDisplay>
             <div id="stats">

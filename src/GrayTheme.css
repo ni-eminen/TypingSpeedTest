@@ -47,6 +47,26 @@ span {
   margin: 3px;
 }
 
+.wrongWord {
+  display: inline-block;
+  color: red;
+  font-size: 32px;
+  padding: 0px 3px 3px 3px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 3px;
+}
+
+.correctWord {
+  display: inline-block;
+  color: orange;
+  font-size: 32px;
+  padding: 0px 3px 3px 3px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 3px;
+}
+
 .firstWord {
   display: inline-block;
   color: white;

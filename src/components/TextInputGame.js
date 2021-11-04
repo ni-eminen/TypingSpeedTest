@@ -28,10 +28,12 @@ const TextInputGame = (props) => {
         new Audio(correctSound).play()
         nextWord()
         props.setScore({...props.score, correctWords: ++props.score.correctWords})
+        props.updateClasses(true)
       } else if (next) {
         new Audio(incorrectSound).play()
         nextWord()
         props.setScore({...props.score, incorrectWords: ++props.score.incorrectWords})
+        props.updateClasses(false)
       }
     }
   
