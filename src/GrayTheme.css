@@ -1,3 +1,12 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
 body {
   font-family: helvetica;
   background-color: black;
@@ -7,6 +16,10 @@ body {
     rgba(22, 22, 22, 1) 0%,
     rgba(42, 42, 42, 1) 100%
   );
+}
+
+span {
+  margin-right: 10px;
 }
 
 #backgroundVideo {
@@ -28,7 +41,7 @@ body {
   display: inline-block;
   color: white;
   font-size: 32px;
-  padding: 0px 0px 0px 5px;
+  padding: 0px 3px 3px 3px;
   border-radius: 5px;
   text-align: center;
   margin: 3px;
@@ -46,11 +59,11 @@ body {
 }
 
 #wordDisplayWrapper {
-  margin-top: 2em;
-  margin-bottom: 2em;
+  /* margin-top: 2em;
+  margin-bottom: 2em; */
   height: 5.5em;
   overflow-y: hidden;
-  outline: 1px orange;
+  outline: 1px solid orange;
 }
 
 .window {

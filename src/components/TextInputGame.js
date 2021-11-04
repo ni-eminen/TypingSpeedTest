@@ -24,7 +24,7 @@ const TextInputGame = (props) => {
       props.onChange()
       let next = event.target.value[event.target.value.length - 1] === " "
       setValue(written)
-      if (written === props.words[0] + " " && next) {
+      if (written === props.words[props.idx] + " " && next) {
         new Audio(correctSound).play()
         nextWord()
         props.setScore({...props.score, correctWords: ++props.score.correctWords})

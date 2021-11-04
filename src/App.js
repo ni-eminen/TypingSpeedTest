@@ -3,7 +3,6 @@ import './TextInput.css';
 import TypingGame from './components/TypingGame.js'
 import TextInput from './components/TextInput'
 import { useEffect, useState } from 'react';
-import sample from './videos/video.mp4'
 import service from './services/typingGame'
 import axios from 'axios'
 
@@ -71,17 +70,20 @@ const ScoreBoard = (props) => {
     props.scores = []
   }
 
+  let i = 1
 
   return (
     <div id="scoreBoardWrapper" className="window">
       <table id="scoreboard">
         <tbody>
             <tr>
+              <th>Place</th>
               <th>User</th>
               <th>Score</th>
             </tr>
-            {props.scores.map(score => 
+            {props.scores.slice(1, 6).map(score => 
             <tr key={Math.random()}>
+              <th>{i++}.</th>
               <th>{score.name}</th>
               <th>{score.score}</th>
             </tr>
@@ -146,15 +148,12 @@ const App = (props) => {
   if(view === "start"){
       return (
         <>
-        {/* <BackgroundVideo videoSrc={sample}></BackgroundVideo> */}
         <StartMenu id="startMenu" submit={submitName} continue={() => {setView('game')}}></StartMenu>
         </>
       )
     }else if(view === "game" || view === "score"){
       return (
-        <>
-          {/* <BackgroundVideo videoSrc={sample}></BackgroundVideo> */}
-    
+        <>    
           <div id="wrapper" style={{ padding: "10px" }}>
             <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={60}/>
             <ScoreBoard scores={scores}></ScoreBoard>

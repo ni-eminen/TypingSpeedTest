@@ -5,14 +5,18 @@ import { useEffect, useState, useRef } from 'react';
 
 let wordList = "I saw a tree and thought of you, or rather, thought of the way you see trees. I remembered when we walked through the Ramble in Central Park, a wild place in the center of a place wilder still, resplendent and emerald in the early summer sun. You stopped suddenly when you saw it. I remember how you cocked your head in appreciation, a tendril of hair escaped from behind your ear. You brushed it back with an unconscious hand.".replace(/,|\.|/g, "").toLowerCase()
 wordList = wordList.split(" ")
-let th = 0
   
-  const WordDisplay = ({ words }) => {
-    
+  const WordDisplay = ({ words, idx }) => {
     return (
       <div id="wordDisplayWrapper">
-        <span className="firstWord">{words[0]} </span>
-        {words.slice(1).map(word => <span key={Math.random()} className="word">{word} </span>)}
+        { 
+          words.map((word, i) => {
+          if(i == idx) {
+            return <span key={i} className="firstWord">{word} </span>
+          } else {
+            return <span key={i} className="word">{word} </span>
+          }
+        })}
       </div>
     )
   }
@@ -47,6 +51,7 @@ const TypingGame = (props) => {
       incorrectWords: 0
     })
     const [started, setStarted] = useState(false)
+    const [idx, setIdx] = useState(0)
 
     const typingSpeedRef = useRef(typingSpeed)
     typingSpeedRef.current = typingSpeed
@@ -64,8 +69,10 @@ const TypingGame = (props) => {
     }
   
     const handleWordsChange = () => {
+      let i = idx + 1
       let w = [...words]
-      w.shift()
+      // w.shift()
+      setIdx(i)
       setWords(w)
     }
   
@@ -82,9 +89,9 @@ const TypingGame = (props) => {
 
     return (
         <div id="gameWrapper" style={{ maxWidth: "640px", margin: "10px auto" }}>
-            <WordDisplay words={words}></WordDisplay>
+            <WordDisplay words={words} idx={idx}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
-                <TextInputGame id="typingInput" setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
+                <TextInputGame id="typingInput" idx={idx} setScore={setScore} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
             </div>
             <TimerDisplay timeLimit={props.timeLimit} started={started} end={() => props.gameEndFunction(score.correctWords)}></TimerDisplay>
             <div id="stats">
