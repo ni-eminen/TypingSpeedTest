@@ -8,6 +8,7 @@ wordList = wordList.split(" ")
   
   const WordDisplay = ({ words, idx, classes }) => {
     const [wordsArr, setWordsArr] = useState([])
+    const currentWord = useRef(null)
 
     useEffect(() => {
       let arr = words.map((word, i) => <span className="word" key={i}>{word}</span>)
@@ -15,12 +16,16 @@ wordList = wordList.split(" ")
       console.log(wordsArr);
     }, []);
 
+    // console.log(currentWord.current);
+    if(currentWord.current) {
+      currentWord.current.scrollIntoView()
+    }
     
     return (
       <div id="wordDisplayWrapper">
          {words.map((word, i) => {
            if(i === idx){
-            return (<span key={i} className={"firstWord"}>{word}</span>)
+            return (<span key={i} className={"currentWord"} ref={currentWord}>{word}</span>)
            } else {
              return (<span key={i} className={classes[i] || "word"}>{word}</span>)
            }
@@ -28,19 +33,6 @@ wordList = wordList.split(" ")
          )}
       </div>
     )
-
-    // return (
-    //   <div id="wordDisplayWrapper">
-    //     { 
-    //       words.map((word, i) => {
-    //       if(i == idx) {
-    //         return <span key={i} className="firstWord">{word} </span>
-    //       } else {
-    //         return <span key={i} className="word">{word} </span>
-    //       }
-    //     })}
-    //   </div>
-    // )
   }
 
 const TimerDisplay = (props) => {

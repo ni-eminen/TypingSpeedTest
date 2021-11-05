@@ -67,7 +67,7 @@ span {
   margin: 3px;
 }
 
-.firstWord {
+.currentWord {
   display: inline-block;
   color: white;
   font-size: 32px;
@@ -79,10 +79,8 @@ span {
 }
 
 #wordDisplayWrapper {
-  /* margin-top: 2em;
-  margin-bottom: 2em; */
   height: 5.5em;
-  overflow-y: hidden;
+  overflow-y: auto;
   outline: 1px solid orange;
 }
 
@@ -183,6 +181,10 @@ h2 {
 .button p {
   font-size: 2em;
   color: white;
+}
+
+#startButton {
+  width: 100%;
 }
 
 #timer {

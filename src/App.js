@@ -56,6 +56,7 @@ const StartMenu = (props) => {
       <InputField title="Name:" set={setName} limit={16}></InputField>
       <div className="button" onClick={() => {if(name.length > 0) {props.submit(name); props.continue()}}} tabIndex="0">
         <p>Start!</p>
+        {/* <a href="yes" style={{width: "100%", height: "100%"}}></a> */}
       </div>
     </div>
   )
@@ -94,21 +95,21 @@ const ScoreBoard = (props) => {
   )
 }
 
-const BackgroundVideo = ({ videoSrc }) => {
-  return (
-    <div id="bgVideoWrap">
-      <video id="backgroundVideo" loop={true} autoPlay={true} muted={true}>
-        <source src={videoSrc} type="video/mp4" />
-      </video>
-    </div>
-  )
-}
+// const BackgroundVideo = ({ videoSrc }) => {
+//   return (
+//     <div id="bgVideoWrap">
+//       <video id="backgroundVideo" loop={true} autoPlay={true} muted={true}>
+//         <source src={videoSrc} type="video/mp4" />
+//       </video>
+//     </div>
+//   )
+// }
 
 const App = (props) => {
   const [view, setView] = useState("start") 
   const [scores, setScores] = useState()
   const [user, setUser] = useState("")
-  const [score, setScore] = useState()
+  // const [score, setScore] = useState()
 
   useEffect(() => {
     document.title = "Typing Speed Test"
@@ -140,7 +141,7 @@ const App = (props) => {
 
   const endGame = (score) => {
     console.log("endgame called", score);
-    setScore(score)
+    // setScore(score)
     setView('score')
     saveScore(score)
   }
