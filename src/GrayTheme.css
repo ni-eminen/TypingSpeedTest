@@ -80,7 +80,7 @@ span {
 
 #wordDisplayWrapper {
   height: 5.5em;
-  overflow-y: auto;
+  overflow-y: hidden;
   outline: 1px solid orange;
 }
 
@@ -124,6 +124,10 @@ table {
   width: 100%;
   color: white;
   max-width: 24%;
+}
+
+#scoreBoardWrapper {
+  overflow-x: auto;
 }
 
 #scoreboard {

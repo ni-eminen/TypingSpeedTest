@@ -63,7 +63,7 @@ const StartMenu = (props) => {
 }
 
 const ScoreBoard = (props) => {
-  //TODO: props.scores is undefined at times
+  //TODO: propsTypeError: Cannot assign to read only property 'scores' of object '#<Object>' at times
   if(props.scores) {  
     quicksort(props.scores, 0, props.scores.length - 1)
     props.scores.reverse()
