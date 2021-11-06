@@ -150,6 +150,28 @@ tr:nth-child(even) {
   color: white;
 }
 
+#inputWrapper {
+  display: flex;
+}
+
+#retryButton {
+  height: 50px;
+  width: 50px;
+  margin: 10px auto;
+  margin-left: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(188, 72, 0, 1) 0%,
+    rgba(242, 94, 2, 1) 100%
+  );
+}
+
+#retryButton img {
+  height: 100%;
+  width: 100%;
+}
+
 #startMenuWrapper {
   max-width: 640px;
   margin: auto;

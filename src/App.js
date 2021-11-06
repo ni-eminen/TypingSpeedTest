@@ -51,10 +51,28 @@ const InputField = (props) => {
 
 const StartMenu = (props) => {
   const [name, setName] = useState('')
+  const onKeyPress = e => {
+    const enterOrSpace =
+      e.key === "Enter" ||
+      e.key === " " ||
+      e.key === "Spacebar" ||
+      e.which === 13 ||
+      e.which === 32;
+    
+    if (enterOrSpace) {
+      e.preventDefault()
+      onClick(e)
+    }
+  }
+
+  const onClick = () => {
+    if(name.length > 0) {props.submit(name); props.continue()}
+  }
+
   return (
     <div id="startMenuWrapper"> 
       <InputField title="Name:" set={setName} limit={16}></InputField>
-      <div className="button" onClick={() => {if(name.length > 0) {props.submit(name); props.continue()}}} tabIndex="0">
+      <div role="button" className="button" onKeyPress={onKeyPress} onClick={onClick} tabIndex="0">
         <p>Start!</p>
         {/* <a href="yes" style={{width: "100%", height: "100%"}}></a> */}
       </div>
@@ -161,7 +179,7 @@ const App = (props) => {
           </div>
         </>
       )
-    } 
+    }
   }
 
 
