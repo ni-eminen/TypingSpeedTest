@@ -22,6 +22,10 @@ span {
   margin-right: 10px;
 }
 
+#retryButton {
+  border-radius: 50%;
+}
+
 #backgroundVideo {
   position: fixed;
   z-index: -10;

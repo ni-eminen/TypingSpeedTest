@@ -1,5 +1,6 @@
 import './GrayTheme.css';
 import './TextInput.css';
+import styled from 'styled-components'
 import TypingGame from './components/TypingGame.js'
 import TextInput from './components/TextInput'
 import { useEffect, useState } from 'react';
@@ -49,21 +50,23 @@ const InputField = (props) => {
 
 }
 
+const Button = styled.button`
+  border: 0px solid black;
+  background-color: RGB(232, 89, 12);
+  color: black;
+  padding: 14px 28px;
+  font-size: 16px;
+  opacity: .75;
+  width: 100%;
+  &:hover {
+    opacity: .9;
+  }
+  `
+
+
+
 const StartMenu = (props) => {
   const [name, setName] = useState('')
-  const onKeyPress = e => {
-    const enterOrSpace =
-      e.key === "Enter" ||
-      e.key === " " ||
-      e.key === "Spacebar" ||
-      e.which === 13 ||
-      e.which === 32;
-    
-    if (enterOrSpace) {
-      e.preventDefault()
-      onClick(e)
-    }
-  }
 
   const onClick = () => {
     if(name.length > 0) {props.submit(name); props.continue()}
@@ -72,10 +75,9 @@ const StartMenu = (props) => {
   return (
     <div id="startMenuWrapper"> 
       <InputField title="Name:" set={setName} limit={16}></InputField>
-      <div role="button" className="button" onKeyPress={onKeyPress} onClick={onClick} tabIndex="0">
-        <p>Start!</p>
-        {/* <a href="yes" style={{width: "100%", height: "100%"}}></a> */}
-      </div>
+      <Button onClick={onClick}>
+        Start!
+      </Button>
     </div>
   )
 }
@@ -127,7 +129,6 @@ const App = (props) => {
   const [view, setView] = useState("start") 
   const [scores, setScores] = useState()
   const [user, setUser] = useState("")
-  // const [score, setScore] = useState()
 
   useEffect(() => {
     document.title = "Typing Speed Test"

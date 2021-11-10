@@ -25,7 +25,6 @@ for(let i = 0; i<300; i++) {
     if(currentWord.current) {
       // currentWord.current.scrollIntoView(1,{ behavior: 'smooth', block: 'nearest', inline: 'start' })
       currentWord.current.parentNode.scrollTop = currentWord.current.offsetTop - 25
-      console.log(currentWord.current);
     }
 
     useEffect(() => {
@@ -59,6 +58,8 @@ const TimerDisplay = (props) => {
       }
       const timer = time > 0 && setInterval(() => setTime(time - 1), 1000)
       return () => clearInterval(timer)
+    } else {
+      setTime(props.timeLimit)
     }
   }, [time, props.started])
 
@@ -95,7 +96,7 @@ const TypingGame = (props) => {
       setStarted(false)
       setIdx(0)
       setClasses([])
-      setCountdown(60)
+      setCountdown(props.timeLimit)
     }
 
     const incrTypingSpeed = () => {
@@ -139,7 +140,7 @@ const TypingGame = (props) => {
             <WordDisplay words={words} idx={idx} classes={classes}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
                 <TextInputGame id="typingInput" idx={idx} setScore={setScore} updateClasses={updateClasses} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
-                <div id="retryButton" class="button" onClick={restart}>
+                <div id="retryButton" className="button" onClick={restart}>
                   <img src={retryImg}></img>
                 </div>
             </div>
