@@ -52,14 +52,15 @@ const InputField = (props) => {
 
 const Button = styled.button`
   border: 0px solid black;
-  background-color: RGB(232, 89, 12);
+  background-color: RGB(232, 89, 12, .75);
   color: black;
   padding: 14px 28px;
   font-size: 16px;
-  opacity: .75;
+  // opacity: .75;
   width: 100%;
+  color: white;
   &:hover {
-    opacity: .9;
+    background-color: RGB(232, 89, 12, 1);
   }
   `
 
