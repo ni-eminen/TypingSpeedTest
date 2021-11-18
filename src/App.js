@@ -175,7 +175,7 @@ const App = (props) => {
     }else if(view === "game" || view === "score"){
       return (
         <>    
-          <div id="wrapper" style={{ padding: "10px" }}>
+          <div id="wrapper" style={{ margin: "0 10px" }}>
             <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={60}/>
             <ScoreBoard scores={scores}></ScoreBoard>
           </div>
