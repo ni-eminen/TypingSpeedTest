@@ -6,9 +6,8 @@ import incorrectSound from '../sounds/wrong_bloop.mp3'
 const TextInputGame = (props) => {
     const [value, setValue] = useState("")
     const [label, setLabel] = useState("")
-  
-    if(props.label) setLabel(props.label)
 
+    if(props.label) setLabel(props.label)
 
     const nextWord = () => {
       setValue("");
@@ -24,6 +23,7 @@ const TextInputGame = (props) => {
       props.onChange()
       let next = event.target.value[event.target.value.length - 1] === " "
       setValue(written)
+
       if (written === props.words[props.idx] + " " && next) {
         new Audio(correctSound).play()
         nextWord()

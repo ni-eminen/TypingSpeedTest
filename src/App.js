@@ -6,6 +6,7 @@ import TextInput from './components/TextInput'
 import { useEffect, useState } from 'react';
 import service from './services/typingGame'
 import axios from 'axios'
+import { nanoid } from 'nanoid'
 
 //swap function for quicksort
 const swap = (arr, i, j) => {
@@ -103,8 +104,8 @@ const ScoreBoard = (props) => {
               <th>User</th>
               <th>Score</th>
             </tr>
-            {props.scores.slice(1, 6).map(score => 
-            <tr key={Math.random()}>
+            {props.scores.slice(0, 6).map(score => 
+            <tr key={nanoid()}>
               <th>{i++}.</th>
               <th>{score.name}</th>
               <th>{score.score}</th>
@@ -127,18 +128,32 @@ const ScoreBoard = (props) => {
 // }
 
 const App = (props) => {
-  const [view, setView] = useState("start") 
-  const [scores, setScores] = useState()
+  const [mode, setMode] = useState("start") 
+  const [scores, setScores] = useState([])
   const [user, setUser] = useState("")
 
+  document.title = "Typing Speed Test"
+
   useEffect(() => {
-    document.title = "Typing Speed Test"
-    const req = axios.get("https://typingspeedserver.herokuapp.com/api/scores")
-        req.then(response => {
-          console.log(response.data);
+    const fetchPlayers = async () => {
+      try {
+        const response = await axios.get("https://typingspeedserver.herokuapp.com/api/scores")
+      //   req.then(response => {
+      //     console.log(response.data);
+      //     setScores(response.data)
+      // })
         setScores(response.data)
-      })
+        console.log(response.data)
+      } catch (err) {
+        console.err(err.message)
+      }
+    }
+    fetchPlayers()
   }, [])
+
+  const updateMode = (newMode) => {
+    setMode(newMode)
+  }
 
   const submitName = (name) => {
     if(name === "") return
@@ -146,37 +161,38 @@ const App = (props) => {
     console.log("playerName: ", name);
   }
 
-  const saveScore = (score) => {
-    let newScore = {
+  const saveScore = async (score) => {
+    const newScore = {
       name: user,
       score: score
     }
   
     console.log("axios.create", newScore);
-    let request = service.create(newScore)
-    request.then(returnedScore => {
-      setScores([...scores, returnedScore])
-    })
+    const response = await service.create(newScore)
+    // request.then(returnedScore => {
+    //   setScores([...scores, returnedScore])
+    // })
+    setScores([...scores, response])
   }
 
   const endGame = (score) => {
     console.log("endgame called", score);
     // setScore(score)
-    setView('score')
+    setMode('score')
     saveScore(score)
   }
 
-  if(view === "start"){
+  if(mode === "start"){
       return (
         <>
-        <StartMenu id="startMenu" submit={submitName} continue={() => {setView('game')}}></StartMenu>
+        <StartMenu id="startMenu" submit={submitName} continue={() => {setMode('game')}}></StartMenu>
         </>
       )
-    }else if(view === "game" || view === "score"){
+    }else if(mode === "game" || mode === "score"){
       return (
         <>    
           <div id="wrapper" style={{ margin: "0 10px" }}>
-            <TypingGame className="typingGame" mode={view} gameEndFunction={endGame} timeLimit={60}/>
+            <TypingGame setMode={() => updateMode} className="typingGame" mode={mode} gameEndFunction={endGame} timeLimit={60}/>
             <ScoreBoard scores={scores}></ScoreBoard>
           </div>
         </>

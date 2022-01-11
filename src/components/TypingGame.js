@@ -21,21 +21,21 @@ const generateWordList = () => {
   return realWordList
 }
 
-const WordDisplay = ({ words, idx, classes }) => {
+const WordDisplay = ({ words, idx, classes, mode }) => {
   const [wordsArr, setWordsArr] = useState([])
   const currentWord = useRef(null)
-
-  // console.log(currentWord.current);
-  if(currentWord.current) {
-    // currentWord.current.scrollIntoView(1,{ behavior: 'smooth', block: 'nearest', inline: 'start' })
-    currentWord.current.parentNode.scrollTop = currentWord.current.offsetTop - 15
-  }
 
   useEffect(() => {
     let arr = words.map((word, i) => <span className="word" key={i}>{word}</span>)
     setWordsArr(arr)
     console.log(wordsArr);
   }, []);
+
+    // console.log('does it even render', currentWord.current);
+    if(currentWord.current) {
+      // currentWord.current.scrollIntoView(1,{ behavior: 'smooth', block: 'nearest', inline: 'start' })
+      currentWord.current.parentNode.scrollTop = currentWord.current.offsetTop - 15
+    }
   
   return (
     <div id="wordDisplayWrapper">
@@ -50,6 +50,7 @@ const WordDisplay = ({ words, idx, classes }) => {
     </div>
   )
 }
+
 
 const TimerDisplay = (props) => {
   const [time, setTime] = useState(props.timeLimit)
@@ -150,6 +151,7 @@ const TypingGame = (props) => {
       setClasses([])
       setCountdown(props.timeLimit)
       setWords(generateWordList())
+      props.setMode('game')
     }
 
     const incrTypingSpeed = () => {
@@ -190,9 +192,9 @@ const TypingGame = (props) => {
 
     return (
         <div id="gameWrapper">
-            <WordDisplay words={words} idx={idx} classes={classes}></WordDisplay>
+            <WordDisplay mode={props.mode} words={words} idx={idx} classes={classes}></WordDisplay>
             <div id="inputWrapper" style={{ margin: "10px auto" }}>
-                <TextInputGame id="typingInput" idx={idx} setScore={setScore} updateClasses={updateClasses} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
+                <TextInputGame mode={props.mode} id="typingInput" idx={idx} setScore={setScore} updateClasses={updateClasses} score={score} onChange={() => {typingSpeedChange(); setStarted(true)}} handleChange={handleWordsChange} words={words} />
                 <AnimatedButton onClick={restart}></AnimatedButton>
                 {/* <Button onClick={restart}>↺</Button> */}
             </div>
